@@ -488,7 +488,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           if (!hasRemoteConfig.current) {
             const initial = createConfigFromVariant(defaultBaseModel);
             setConfig(initial);
-            emit({ kind: "config", userId, username, config: initial });
+            hasRemoteConfig.current = true;
           }
           return;
         }
@@ -521,7 +521,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
             if (!hasRemoteConfig.current) {
               const initial = createConfigFromVariant(meta.baseModel);
               setConfig(initial);
-              emit({ kind: "config", userId, username, config: initial });
+              hasRemoteConfig.current = true;
             }
           }
           emit({ kind: "project-meta", userId, username, project: meta });
@@ -530,7 +530,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           if (!hasRemoteConfig.current) {
             const initial = createConfigFromVariant(defaultBaseModel);
             setConfig(initial);
-            emit({ kind: "config", userId, username, config: initial });
+            hasRemoteConfig.current = true;
           }
         }
         setStatus(saveStatus ?? null);
@@ -540,7 +540,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         if (!hasRemoteConfig.current) {
           const initial = createConfigFromVariant(defaultBaseModel);
           setConfig(initial);
-          emit({ kind: "config", userId, username, config: initial });
+          hasRemoteConfig.current = true;
         }
       }
     };
