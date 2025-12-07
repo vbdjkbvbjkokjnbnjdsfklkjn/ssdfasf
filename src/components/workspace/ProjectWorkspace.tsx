@@ -123,7 +123,13 @@ function readIdentity() {
 }
 
 function useIdentity() {
-  const [identity] = useState(() => readIdentity());
+  const [identity, setIdentity] = useState<{ id: string; name: string }>({ id: "", name: "" });
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIdentity(readIdentity());
+  }, []);
+
   return { userId: identity.id, username: identity.name };
 }
 
@@ -214,7 +220,6 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [status, setStatus] = useState<string | null>(null);
   const [synced, setSynced] = useState(false);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
-  const [loadingConfig, setLoadingConfig] = useState(true);
   const [comments, setComments] = useState<Record<string, CommentItem[]>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const channelRef = useRef<BroadcastChannel | null>(null);
@@ -308,7 +313,6 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         pushActivity(`${message.username} adjusted the build`, message.username);
         setSynced(true);
         setTimeout(() => setSynced(false), 1200);
-        setLoadingConfig(false);
       }
 
       if (message.kind === "focus") {
@@ -423,7 +427,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       channel.removeEventListener("message", onMessage);
       channel.close();
     };
-  }, [handleIncoming, projectId, userId, username]);
+  }, [handleIncoming, projectId, userId]);
 
   useEffect(() => {
     if (!userId) return;
@@ -479,66 +483,62 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
 
   useEffect(() => {
     if (!userId || typeof window === "undefined") return;
-    const saved = window.localStorage.getItem(USERNAME_KEY);
-    const effectiveUser = saved?.trim() || username;
+    const effectiveUser = username;
     const fetchProjects = async () => {
-      setLoadingConfig(true);
       try {
-        setStatus("Syncing project...");
-        const res = await fetch(`/api/projects?username=${encodeURIComponent(effectiveUser)}`);
-        if (!res.ok) {
-          setStatus("Project data unavailable; using local config");
-          if (!hasRemoteConfig.current) {
-            const initial = createConfigFromVariant(defaultBaseModel);
-            setConfig(initial);
-            hasRemoteConfig.current = true;
-          }
-          setLoadingConfig(false);
-          return;
-        }
-        const data = await res.json();
-        const items: ApiProject[] = Array.isArray(data.projects) ? (data.projects as ApiProject[]) : [];
-        const match = items.find(
-          (item) => item.id === projectId || item.title === projectId || item._id === projectId
-        );
-        if (match) {
-          const meta: ProjectMeta = {
-            title: match.title ?? match.name ?? fallbackTitle,
-            description: match.description,
-            baseModel: match.baseModel || defaultBaseModel,
-          };
-          setProjectMeta(meta);
-          if (!hasRemoteConfig.current) {
-            try {
-              const cfgRes = await fetch(`/api/projects/${projectId}/config`);
-              if (cfgRes.ok) {
-                const body = await cfgRes.json();
-                if (body?.config) {
-                  setConfig(body.config);
-                  hasRemoteConfig.current = true;
-                  setLoadingConfig(false);
-                }
+        setStatus("Loading project config...");
+
+        // Always try to pull the saved config first (even if viewer isn't the owner)
+        if (!hasRemoteConfig.current) {
+          try {
+            const cfgRes = await fetch(`/api/projects/${projectId}/config`);
+            if (cfgRes.ok) {
+              const body = await cfgRes.json();
+              if (body?.config) {
+                setConfig(body.config);
+                hasRemoteConfig.current = true;
               }
-            } catch (err) {
-              console.warn("Config load fallback to default", err);
             }
-            if (!hasRemoteConfig.current) {
-              const initial = createConfigFromVariant(meta.baseModel);
-              setConfig(initial);
-              hasRemoteConfig.current = true;
-              setLoadingConfig(false);
-            }
+          } catch (err) {
+            console.warn("Config load fallback to default", err);
           }
-          emit({ kind: "project-meta", userId, username, project: meta });
-        } else {
-          setProjectMeta((prev) => ({ ...prev, title: fallbackTitle }));
-          if (!hasRemoteConfig.current) {
+        }
+
+        // Now try to fetch project meta (owner or collaborator listing)
+        const res = await fetch(`/api/projects?username=${encodeURIComponent(effectiveUser)}`);
+        if (res.ok) {
+          const data = await res.json();
+          const items: ApiProject[] = Array.isArray(data.projects) ? (data.projects as ApiProject[]) : [];
+          const match = items.find(
+            (item) => item.id === projectId || item.title === projectId || item._id === projectId
+          );
+          if (match) {
+            const meta: ProjectMeta = {
+              title: match.title ?? match.name ?? fallbackTitle,
+              description: match.description,
+              baseModel: match.baseModel || defaultBaseModel,
+            };
+            setProjectMeta(meta);
+            emit({ kind: "project-meta", userId, username, project: meta });
+          } else if (!hasRemoteConfig.current) {
+            // No meta and no saved config; seed local only
             const initial = createConfigFromVariant(defaultBaseModel);
             setConfig(initial);
             hasRemoteConfig.current = true;
           }
-          setLoadingConfig(false);
+        } else if (!hasRemoteConfig.current) {
+          const initial = createConfigFromVariant(defaultBaseModel);
+          setConfig(initial);
+          hasRemoteConfig.current = true;
         }
+
+        // Fallback meta if none loaded
+        setProjectMeta((prev) => ({
+          title: prev.title || fallbackTitle,
+          description: prev.description,
+          baseModel: prev.baseModel || config.model || defaultBaseModel,
+        }));
+
         setStatus(saveStatus ?? null);
       } catch (error) {
         console.error(error);
@@ -548,15 +548,18 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           setConfig(initial);
           hasRemoteConfig.current = true;
         }
-        setLoadingConfig(false);
       }
     };
     fetchProjects();
-  }, [defaultBaseModel, emit, fallbackTitle, projectId, saveStatus, userId, username]);
+  }, [config.model, defaultBaseModel, emit, fallbackTitle, projectId, saveStatus, userId, username]);
 
   const peersList = Object.values(peers);
 
   const fieldCollab = (field: string) => fieldOwners[field] ?? [];
+  const displayTitle =
+    projectMeta.title && projectMeta.title !== fallbackTitle
+      ? projectMeta.title
+      : fallbackTitle.replace(/[-_]/g, " ");
 
   return (
     <div
@@ -584,7 +587,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       <header className="relative z-10 flex flex-wrap items-start justify-between gap-3 border-b border-white/5 pb-4">
         <div>
           <p className="text-xs uppercase tracking-[0.32em] text-slate-400">Live workspace</p>
-          <h1 className="text-2xl font-semibold text-white">{projectMeta.title}</h1>
+          <h1 className="text-2xl font-semibold text-white">{displayTitle}</h1>
           <p className="text-sm text-slate-300">
             Base model: {projectMeta.baseModel} - Project ID {projectId}
           </p>
@@ -597,16 +600,18 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
             <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-200 ring-1 ring-emerald-400/40">
               {synced ? "Synced" : "Live"}
             </span>
-            <PresenceBadge
-              peer={{
-                id: userId,
-                username,
-                x: 0,
-                y: 0,
-                lastSeen: selfLastSeen,
-                color: createColor(userId),
-              }}
-            />
+            {userId ? (
+              <PresenceBadge
+                peer={{
+                  id: userId,
+                  username: username || "Guest",
+                  x: 0,
+                  y: 0,
+                  lastSeen: selfLastSeen,
+                  color: createColor(userId),
+                }}
+              />
+            ) : null}
             {peersList.map((peer) => (
               <PresenceBadge key={peer.id} peer={peer} />
             ))}
@@ -621,13 +626,6 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           </span>
         </div>
       </header>
-
-      {loadingConfig ? (
-        <div className="relative z-10 mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-slate-200">
-          Loading shared car configuration...
-        </div>
-      ) : (
-        <>
 
       <div className="relative z-10 mt-6 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <section className="space-y-4">
@@ -809,8 +807,6 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           </div>
         ))}
       </div>
-        </>
-      )}
     </div>
   );
 }
