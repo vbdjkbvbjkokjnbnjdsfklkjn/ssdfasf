@@ -17,6 +17,8 @@ export type Project = {
   baseBranch: string;
   baseModel?: string;
   updatedAt: string;
+  createdAt?: string;
+  owner?: string;
   tags: string[];
   branches: Branch[];
 };

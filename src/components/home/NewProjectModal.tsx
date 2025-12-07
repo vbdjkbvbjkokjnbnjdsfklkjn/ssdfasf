@@ -28,6 +28,15 @@ export function NewProjectModal() {
     return () => window.removeEventListener("collabcar:user", handleUser as EventListener);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   const close = () => {
     setOpen(false);
     setStatus(null);
@@ -95,11 +104,12 @@ export function NewProjectModal() {
           <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/90 p-6 text-slate-100 shadow-2xl ring-1 ring-indigo-500/25">
             <button
               type="button"
-              className="absolute right-3 top-3 rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:ring-offset-2"
+              className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-slate-100 transition hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               onClick={close}
               aria-label="Close"
             >
-              X
+              <span aria-hidden="true">×</span>
+              <span>Close</span>
             </button>
             <div className="space-y-1">
               <h2 className="text-2xl font-semibold text-slate-100">Build a Car</h2>

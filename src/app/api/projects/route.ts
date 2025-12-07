@@ -18,6 +18,9 @@ export async function GET(request: Request) {
       ...p,
       id: p._id?.toString(),
       title: p.name,
+      owner: p.ownerUsername,
+      createdAt: (p as { createdAt?: Date }).createdAt,
+      updatedAt: (p as { updatedAt?: Date }).updatedAt,
     }));
     return NextResponse.json({ projects: payload });
   } catch (error) {

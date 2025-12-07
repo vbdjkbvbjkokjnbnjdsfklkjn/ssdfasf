@@ -39,6 +39,7 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
   const [copied, setCopied] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   const handleMenuBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -144,10 +145,18 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
 
   useEffect(() => {
     setMounted(true);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        if (shareOpen) setShareOpen(false);
+        if (detailsOpen) setDetailsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
     return () => {
       if (toastTimer.current) clearTimeout(toastTimer.current);
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
+  }, [detailsOpen, shareOpen]);
 
   const computeShareLink = () => {
     if (typeof window === "undefined") return `/projects/${encodedId}`;
@@ -160,6 +169,11 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
     const link = computeShareLink();
     setShareLink(link);
     setShareOpen(true);
+  };
+
+  const handleDetails = () => {
+    setMenuOpen(false);
+    setDetailsOpen(true);
   };
 
   const closeShare = () => {
@@ -264,7 +278,11 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
           >
             Open
           </Link>
-          <button className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+          <button
+            type="button"
+            onClick={handleDetails}
+            className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          >
             Details
           </button>
         </div>
@@ -318,6 +336,86 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
                             Copy link
                           </button>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              {detailsOpen ? (
+                <div
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/88 px-4 py-8 backdrop-blur"
+                  onClick={() => setDetailsOpen(false)}
+                >
+                  <div
+                    className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-slate-950 p-6 text-slate-100 shadow-[0_24px_120px_-60px_rgba(8,15,30,0.9)] ring-1 ring-white/10"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <div className="pointer-events-none absolute inset-0">
+                      <div className="absolute -left-16 top-2 h-48 w-48 rounded-full bg-indigo-500/10 blur-xl" />
+                      <div className="absolute right-[-10%] bottom-[-18%] h-60 w-60 rounded-full bg-sky-400/12 blur-[55px]" />
+                    </div>
+                    <button
+                      type="button"
+                      aria-label="Close details"
+                      onClick={() => setDetailsOpen(false)}
+                      className="absolute right-3 top-3 inline-flex items-center justify-center gap-1 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-slate-100 transition hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                    >
+                      <span aria-hidden="true">×</span>
+                      <span>Close</span>
+                    </button>
+                    <div className="relative space-y-4">
+                      <div className="space-y-1">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-indigo-200/80">Project details</p>
+                        <h3 className="text-2xl font-semibold text-white">{project.title}</h3>
+                        <p className="text-sm text-slate-300">
+                          {project.description || "No description provided."}
+                        </p>
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Base model</p>
+                          <p className="text-sm text-white">{project.baseModel ?? "Not set"}</p>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Stage</p>
+                          <p className="text-sm text-white">{project.stage || "Active"}</p>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Base branch</p>
+                          <p className="text-sm text-white">{project.baseBranch || "main"}</p>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Updated</p>
+                          <p className="text-sm text-white">{formatRelativeTime(project.updatedAt)}</p>
+                        </div>
+                      </div>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Created</p>
+                          <p className="text-sm text-white">
+                            {project.createdAt ? formatRelativeTime(project.createdAt) : "Unknown"}
+                          </p>
+                        </div>
+                        <div className="rounded-xl border border-white/10 bg-slate-900/80 p-3">
+                          <p className="text-[11px] uppercase tracking-[0.14em] text-slate-400">Owner</p>
+                          <p className="text-sm text-white">{project.owner ?? "Unknown"}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Link
+                          href={`/projects/${encodedId}`}
+                          className="inline-flex items-center justify-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_12px_40px_-22px_rgba(79,70,229,0.9)] transition hover:-translate-y-px hover:shadow-[0_16px_48px_-22px_rgba(79,70,229,0.95)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                          onClick={() => setDetailsOpen(false)}
+                        >
+                          Open workspace
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={copyLink}
+                          className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                        >
+                          Copy link
+                        </button>
                       </div>
                     </div>
                   </div>

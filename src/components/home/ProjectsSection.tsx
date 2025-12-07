@@ -25,6 +25,8 @@ export function ProjectsSection() {
           stage: (cast.stage as string) ?? "Active",
           baseBranch: (cast.baseBranch as string) ?? "main",
           updatedAt: (cast.updatedAt as string) ?? new Date().toISOString(),
+          createdAt: (cast.createdAt as string) ?? undefined,
+          owner: (cast.ownerUsername as string) ?? (cast.owner as string) ?? undefined,
           baseModel: (cast.baseModel as string) ?? undefined,
           tags: (cast.tags as string[]) ?? [],
           branches: (cast.branches as []) ?? [],
