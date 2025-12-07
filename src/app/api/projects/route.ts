@@ -13,7 +13,13 @@ export async function GET(request: Request) {
   try {
     await connectToDatabase();
     const projects = await Project.find({ ownerUsername: username }).lean();
-    return NextResponse.json({ projects });
+
+    const payload = projects.map((p) => ({
+      ...p,
+      id: p._id?.toString(),
+      title: p.name,
+    }));
+    return NextResponse.json({ projects: payload });
   } catch (error) {
     console.error("[GET /api/projects]", error);
     return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });

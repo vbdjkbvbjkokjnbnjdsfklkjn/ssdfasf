@@ -2,12 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type FocusEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState, type FocusEvent } from "react";
+import { createPortal } from "react-dom";
 import type { Project } from "@/data/projects";
 import { formatRelativeTime } from "@/lib/time";
 
 type ProjectCardProps = {
   project: Project;
+  currentUsername?: string;
+  onDelete?: (projectId: string) => void;
 };
 
 function ProjectVisual({ title }: { title: string }) {
@@ -25,8 +29,16 @@ function ProjectVisual({ title }: { title: string }) {
   );
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardProps) {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [status, setStatus] = useState<string | null>(null);
+  const encodedId = useMemo(() => encodeURIComponent(project.id), [project.id]);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareLink, setShareLink] = useState("");
+  const [copied, setCopied] = useState(false);
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const handleMenuBlur = (event: FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -35,6 +47,148 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   const toggleMenu = () => setMenuOpen((open) => !open);
+
+  const handleBranch = async () => {
+    setMenuOpen(false);
+    const ownerUsername = (currentUsername ?? "").trim() || "Guest";
+    setStatus("Branching...");
+
+    try {
+      const baseBranchName = `${project.title} Branch`;
+      let branchName = baseBranchName;
+
+      try {
+        const listRes = await fetch(`/api/projects?username=${encodeURIComponent(ownerUsername)}`);
+        if (listRes.ok) {
+          const listBody = await listRes.json();
+          const names = new Set(
+            Array.isArray(listBody.projects)
+              ? listBody.projects.map((p: Project) => p.title ?? p.name ?? "")
+              : []
+          );
+          let suffix = 2;
+          while (names.has(branchName)) {
+            branchName = `${baseBranchName} - ${suffix}`;
+            suffix += 1;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not inspect existing branches", err);
+      }
+
+      const cfgRes = await fetch(`/api/projects/${encodedId}/config`);
+      const cfgBody = cfgRes.ok ? await cfgRes.json().catch(() => ({})) : {};
+      const config = cfgBody?.config;
+
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: branchName,
+          baseModel: project.baseModel ?? config?.model ?? "Model",
+          ownerUsername,
+          description: project.description,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Branch creation failed");
+      const body = await res.json();
+      const newId = body.project?._id || body.project?.id;
+      if (!newId) throw new Error("No project id returned");
+
+      if (config) {
+        await fetch(`/api/projects/${encodeURIComponent(newId)}/config`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(config),
+        });
+      }
+
+      setStatus(`Branched: ${branchName}`);
+      router.refresh();
+      if (typeof window !== "undefined") {
+        // Ensure UI reflects new project immediately
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("Branch failed");
+    }
+  };
+
+  const handleDelete = async () => {
+    setMenuOpen(false);
+    if (typeof window !== "undefined") {
+      const confirmed = window.confirm(`Delete "${project.title}"? This cannot be undone.`);
+      if (!confirmed) return;
+    }
+    try {
+      setStatus("Deleting...");
+      const res = await fetch(`/api/projects/${encodedId}`, { method: "DELETE" });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        const message = body?.error || "Delete failed";
+        setStatus(message);
+        window.alert(message);
+        return;
+      }
+      setStatus("Deleted");
+      onDelete?.(project.id);
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      setStatus("Delete failed");
+      window.alert("Delete failed. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    setMounted(true);
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
+
+  const computeShareLink = () => {
+    if (typeof window === "undefined") return `/projects/${encodedId}`;
+    const origin = window.location.origin;
+    return `${origin}/projects/${encodedId}`;
+  };
+
+  const handleShare = () => {
+    setMenuOpen(false);
+    const link = computeShareLink();
+    setShareLink(link);
+    setShareOpen(true);
+  };
+
+  const closeShare = () => {
+    setShareOpen(false);
+  };
+
+  const copyLink = async () => {
+    const link = shareLink || computeShareLink();
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(link);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = link;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+      setCopied(true);
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+      toastTimer.current = setTimeout(() => setCopied(false), 2200);
+    } catch (error) {
+      console.error("Copy failed", error);
+      setStatus("Copy failed");
+    }
+  };
 
   return (
     <article className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/5 bg-[linear-linear(135deg,rgba(17,25,45,0.9),rgba(10,18,35,0.9))] p-5 shadow-[0_18px_50px_-28px_rgba(0,0,0,0.85)] ring-1 ring-slate-900/40 transition hover:-translate-y-0.5 hover:ring-indigo-500/50">
@@ -76,21 +230,21 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <button
               className="rounded-lg px-3 py-2 text-center transition hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               type="button"
-              onClick={() => setMenuOpen(false)}
+              onClick={handleBranch}
             >
               Branch
             </button>
             <button
               className="rounded-lg px-3 py-2 text-center transition hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               type="button"
-              onClick={() => setMenuOpen(false)}
+              onClick={handleDelete}
             >
               Delete
             </button>
             <button
               className="rounded-lg px-3 py-2 text-center transition hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
               type="button"
-              onClick={() => setMenuOpen(false)}
+              onClick={handleShare}
             >
               Share
             </button>
@@ -105,7 +259,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex items-center justify-end gap-2 text-sm text-slate-200">
         <div className="flex items-center gap-2">
           <Link
-            href={`/projects/${project.id}`}
+            href={`/projects/${encodedId}`}
             className="rounded-full bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_40px_-22px_rgba(79,70,229,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_44px_-22px_rgba(79,70,229,0.8)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
           >
             Open
@@ -115,6 +269,69 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </button>
         </div>
       </div>
+      {status ? <p className="text-xs text-slate-400">{status}</p> : null}
+
+      {mounted
+        ? createPortal(
+            <>
+              {shareOpen ? (
+                <div
+                  className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/88 px-4 py-8 backdrop-blur-[1px]"
+                  onClick={closeShare}
+                >
+                  <div
+                    className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 bg-slate-950 p-6 text-slate-100 shadow-[0_24px_120px_-60px_rgba(8,15,30,0.9)] ring-1 ring-white/10"
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <div className="pointer-events-none absolute inset-0">
+                      <div className="absolute -left-16 top-0 h-44 w-44 rounded-full bg-indigo-500/12 blur-xl" />
+                      <div className="absolute right-[-10%] bottom-[-18%] h-56 w-56 rounded-full bg-emerald-400/10 blur-[60px]" />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={closeShare}
+                      className="absolute right-3 top-3 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200 transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                    >
+                      Close
+                    </button>
+                    <div className="relative space-y-3">
+                      <div className="space-y-1">
+                        <p className="text-[11px] uppercase tracking-[0.24em] text-indigo-200/80">Share Project</p>
+                        <h3 className="text-2xl font-semibold text-white">{project.title}</h3>
+                        <p className="text-sm text-slate-300">
+                          Copy this link to invite collaborators to the workspace.
+                        </p>
+                      </div>
+                      <div className="rounded-2xl border border-white/10 bg-slate-900/70 p-4 ring-1 ring-white/10">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">Shareable link</p>
+                        <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
+                          <input
+                            readOnly
+                            value={shareLink || computeShareLink()}
+                            className="w-full rounded-xl border border-white/10 bg-slate-950/80 px-3 py-2.5 text-sm text-slate-100 outline-none transition focus:border-indigo-400/60 focus:ring-2 focus:ring-indigo-400/30"
+                          />
+                          <button
+                            type="button"
+                            onClick={copyLink}
+                            className="min-w-[120px] rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-[0_16px_46px_-24px_rgba(79,70,229,0.85)] transition hover:-translate-y-px hover:shadow-[0_20px_56px_-24px_rgba(79,70,229,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                          >
+                            Copy link
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              {copied ? (
+                <div className="pointer-events-none fixed bottom-6 right-6 z-50 animate-[fadeIn_120ms_ease-out] rounded-xl border border-emerald-300/30 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100 shadow-xl ring-1 ring-emerald-400/30">
+                  Link copied to clipboard
+                </div>
+              ) : null}
+            </>,
+            document.body
+          )
+        : null}
     </article>
   );
 }

@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useCallback,
   useEffect,
@@ -204,6 +205,7 @@ function PillOptions<T extends string | number>({
 }
 
 export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceProps) {
+  const router = useRouter();
   const { userId, username } = useIdentity();
   const defaultBaseModel = listBaseModels()[0]?.name || "Model";
   const [projectMeta, setProjectMeta] = useState<ProjectMeta>({
@@ -227,6 +229,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const containerRef = useRef<HTMLDivElement | null>(null);
   const lastCursorSent = useRef<number>(0);
   const hasRemoteConfig = useRef(false);
+  const encodedProjectId = useMemo(() => encodeURIComponent(projectId), [projectId]);
 
   const pricing = useMemo(() => calculatePricing(config), [config]);
   const numberFmt = useMemo(
@@ -380,7 +383,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
     async (configToSave: CarConfiguration) => {
       try {
         setSaveStatus("Saving...");
-        await fetch(`/api/projects/${projectId}/config`, {
+        await fetch(`/api/projects/${encodedProjectId}/config`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(configToSave),
@@ -409,6 +412,97 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       persistConfig(next);
       return next;
     });
+  };
+
+  const branchProject = async () => {
+    const ownerUsername = username?.trim() || "Guest";
+    const baseName =
+      projectMeta.title && projectMeta.title !== fallbackTitle
+        ? `${projectMeta.title} Branch`
+        : `${fallbackTitle} Branch`;
+
+    try {
+      setStatus("Creating branch...");
+
+      // Try to find next branch number by checking existing projects for this user with same baseName prefix
+      const listRes = await fetch(`/api/projects?username=${encodeURIComponent(ownerUsername)}`);
+      let branchName = baseName;
+      if (listRes.ok) {
+        const data = await listRes.json().catch(() => ({}));
+        const existing: ApiProject[] = Array.isArray(data.projects) ? (data.projects as ApiProject[]) : [];
+        const matching = existing
+          .map((p) => p.name || p.title || p.id || "")
+          .filter((name) => typeof name === "string" && name.startsWith(baseName));
+        if (matching.length > 0) {
+          const numbers = matching
+            .map((name) => {
+              const suffix = name.replace(baseName, "").trim();
+              const num = parseInt(suffix, 10);
+              return Number.isFinite(num) ? num : 1;
+            })
+            .filter((n) => Number.isFinite(n));
+          const nextNum = Math.max(1, ...numbers) + 1;
+          branchName = `${baseName} ${nextNum}`;
+        }
+      }
+
+      const res = await fetch("/api/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: branchName,
+          baseModel: projectMeta.baseModel || defaultBaseModel,
+          ownerUsername,
+          description: projectMeta.description,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Branch creation failed");
+      const body = await res.json();
+      const newId = body.project?._id || body.project?.id;
+      if (!newId) throw new Error("No project id returned");
+
+      await fetch(`/api/projects/${encodeURIComponent(newId)}/config`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(config),
+      });
+
+      setStatus(`Branched to ${branchName}`);
+      router.refresh();
+      if (typeof window !== "undefined") {
+        // Ensure the page reflects the new branch state immediately
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Branch failed", error);
+      setStatus("Branch failed");
+    }
+  };
+
+  const deleteProject = async () => {
+    if (typeof window !== "undefined") {
+      const confirmDelete = window.confirm("Delete this project? This cannot be undone.");
+      if (!confirmDelete) return;
+    }
+
+    try {
+      setStatus("Deleting project...");
+      const res = await fetch(`/api/projects/${encodedProjectId}`, { method: "DELETE" });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        const message = body?.error || "Delete failed";
+        setStatus(message);
+        if (typeof window !== "undefined") window.alert(message);
+        return;
+      }
+      setStatus("Project deleted");
+      router.push("/");
+    } catch (error) {
+      console.error("Delete failed", error);
+      setStatus("Delete failed");
+      if (typeof window !== "undefined") window.alert("Delete failed. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -491,7 +585,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         // Always try to pull the saved config first (even if viewer isn't the owner)
         if (!hasRemoteConfig.current) {
           try {
-            const cfgRes = await fetch(`/api/projects/${projectId}/config`);
+            const cfgRes = await fetch(`/api/projects/${encodedProjectId}/config`);
             if (cfgRes.ok) {
               const body = await cfgRes.json();
               if (body?.config) {
@@ -615,6 +709,20 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
             {peersList.map((peer) => (
               <PresenceBadge key={peer.id} peer={peer} />
             ))}
+            <button
+              type="button"
+              onClick={branchProject}
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-white transition hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Branch
+            </button>
+            <button
+              type="button"
+              onClick={deleteProject}
+              className="rounded-full border border-rose-300/40 bg-rose-500/10 px-3 py-1 text-xs font-semibold text-rose-100 transition hover:border-rose-200/70 hover:bg-rose-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Delete
+            </button>
           </div>
           <span
             className={clsx(

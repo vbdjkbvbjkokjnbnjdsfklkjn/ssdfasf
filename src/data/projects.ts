@@ -11,9 +11,11 @@ export type Branch = {
 export type Project = {
   id: string;
   title: string;
+  name?: string;
   description: string;
   stage: string;
   baseBranch: string;
+  baseModel?: string;
   updatedAt: string;
   tags: string[];
   branches: Branch[];
@@ -27,6 +29,7 @@ export const projects: Project[] = [
       "Family-first SUV with panoramic roof, premium safety stack, and configurable seating.",
     stage: "In workshop",
     baseBranch: "main",
+    baseModel: "Aurora SUV",
     updatedAt: "2025-12-05T08:30:00.000Z",
     tags: ["collaboration", "pricing", "live-preview"],
     branches: [

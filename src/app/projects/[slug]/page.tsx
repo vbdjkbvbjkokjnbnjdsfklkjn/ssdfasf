@@ -1,8 +1,6 @@
 import { ProjectWorkspace } from "@/components/workspace/ProjectWorkspace";
 
-type ProjectPageProps = {
-  params: Promise<{ slug: string | string[] }>;
-};
+type ProjectPageProps = PageProps<"/projects/[slug]">;
 
 function decodeSlug(slug: string) {
   try {
@@ -13,15 +11,8 @@ function decodeSlug(slug: string) {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const resolvedParams = await params;
-
-  const safeSlug =
-    typeof resolvedParams.slug === "string"
-      ? resolvedParams.slug
-      : Array.isArray(resolvedParams.slug)
-        ? resolvedParams.slug[0]
-        : "";
-
+  const { slug } = await params;
+  const safeSlug = Array.isArray(slug) ? slug[0] : slug || "";
   const fallbackTitle = decodeSlug(safeSlug).replace(/-/g, " ");
 
   return (

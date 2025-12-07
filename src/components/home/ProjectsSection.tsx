@@ -25,6 +25,7 @@ export function ProjectsSection() {
           stage: (cast.stage as string) ?? "Active",
           baseBranch: (cast.baseBranch as string) ?? "main",
           updatedAt: (cast.updatedAt as string) ?? new Date().toISOString(),
+          baseModel: (cast.baseModel as string) ?? undefined,
           tags: (cast.tags as string[]) ?? [],
           branches: (cast.branches as []) ?? [],
         };
@@ -88,6 +89,10 @@ export function ProjectsSection() {
     };
   }, [fetchProjects, username]);
 
+  const handleDeleted = useCallback((projectId: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== projectId));
+  }, []);
+
   return (
     <section id="projects" className="flex flex-col gap-3">
       <div className="flex items-center justify-between text-sm text-slate-200">
@@ -99,7 +104,11 @@ export function ProjectsSection() {
         <p className="text-xs text-amber-300">Log in with your username to load your projects.</p>
       )}
       {items.length > 0 ? (
-        <ProjectList projects={items} />
+        <ProjectList
+          projects={items}
+          currentUsername={username ?? undefined}
+          onDelete={handleDeleted}
+        />
       ) : (
         <p className="text-sm text-slate-400">No projects yet - create one to get started.</p>
       )}
