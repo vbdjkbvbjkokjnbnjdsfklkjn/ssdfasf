@@ -1,0 +1,30 @@
+Module 
+	--> fetch top k vaali module
+		--> given two car config how will we computing similarity score on that // good if we wanna change in future
+	--> we will have hard coded cars
+		-- we will be creating a cars json file in which we can have some cars and good for matching
+	--> video call module is completely independent
+	--> project and double cursor thing is base of the project we gotta do that
+	--> 
+	
+	
+priority
+	- We will be doing the double cursor along with the home page showing 
+	- car match feature
+	- we need raw data for which we will be generating
+	- in line chat feature
+	- prompt thing
+
+
+extra features
+	- showing the car collaborators name for each of the project under the project details section	
+	- showing for each of the component the default and the change that we made and who did that
+	- for each of the user once we sign up we need to show up that 
+	- as of now we are planning to display only the created project on that home page afterward as and as we collaborate 	  will add that project also to the home page of who collaborated
+	- 
+
+
+
+Questions
+	- Is it fine if I use hard coded data all over like as of now we don't have any admin side
+	- what should be the property we should enable client to change as of now we are thinking of tyres , sunroof and all
