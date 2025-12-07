@@ -425,11 +425,16 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
 
   useEffect(() => {
     if (!userId) return;
-    // Ensure server-side Socket.IO is initialized
-    fetch("/api/socket").catch(() => undefined);
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
+    const socketPath = socketUrl ? "/socket.io" : "/api/socket";
 
-    const socket = io({
-      path: "/api/socket",
+    // Ensure local server-side Socket.IO is initialized when using in-app server
+    if (!socketUrl) {
+      fetch("/api/socket").catch(() => undefined);
+    }
+
+    const socket = io(socketUrl ?? undefined, {
+      path: socketPath,
       transports: ["websocket"],
       query: { projectId, username, userId },
     });
