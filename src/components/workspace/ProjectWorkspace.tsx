@@ -10,6 +10,7 @@ import {
   useState,
   type MouseEvent as ReactMouseEvent,
 } from "react";
+import { io, type Socket } from "socket.io-client";
 import {
   calculatePricing,
   CarConfiguration,
@@ -216,6 +217,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [comments, setComments] = useState<Record<string, CommentItem[]>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const channelRef = useRef<BroadcastChannel | null>(null);
+  const socketRef = useRef<Socket | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const lastCursorSent = useRef<number>(0);
   const hasRemoteConfig = useRef(false);
@@ -258,6 +260,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const emit = useCallback(
     (message: CollabMessage) => {
       channelRef.current?.postMessage(message);
+      socketRef.current?.emit("collab-message", message);
     },
     []
   );
@@ -282,6 +285,55 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       },
     }));
   }, []);
+
+  const handleIncoming = useCallback(
+    (message: CollabMessage) => {
+      if (!message || (message as CollabMessage).userId === userId) return;
+
+      if (message.kind === "cursor") {
+        upsertPeer({
+          id: message.userId,
+          username: message.username,
+          x: message.x,
+          y: message.y,
+          lastSeen: Date.now(),
+          focus: peersRef.current[message.userId]?.focus,
+        });
+      }
+
+      if (message.kind === "config") {
+        hasRemoteConfig.current = true;
+        setConfig(message.config);
+        pushActivity(`${message.username} adjusted the build`, message.username);
+        setSynced(true);
+        setTimeout(() => setSynced(false), 1200);
+      }
+
+      if (message.kind === "focus") {
+        upsertPeer({
+          id: message.userId,
+          username: message.username,
+          x: peersRef.current[message.userId]?.x ?? 0,
+          y: peersRef.current[message.userId]?.y ?? 0,
+          lastSeen: Date.now(),
+          focus: message.field,
+        });
+      }
+
+      if (message.kind === "comment") {
+        upsertComment(message.comment);
+      }
+
+      if (message.kind === "project-meta") {
+        setProjectMeta((prev) => ({
+          title: message.project.title ?? prev.title,
+          description: message.project.description ?? prev.description,
+          baseModel: message.project.baseModel ?? prev.baseModel,
+        }));
+      }
+    },
+    [pushActivity, upsertComment, upsertPeer, userId]
+  );
 
   const handleMouseMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || !userId) return;
@@ -361,49 +413,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
 
     const onMessage = (event: MessageEvent<CollabMessage>) => {
       const message = event.data;
-      if (!message || (message as CollabMessage).userId === userId) return;
-
-      if (message.kind === "cursor") {
-        upsertPeer({
-          id: message.userId,
-          username: message.username,
-          x: message.x,
-          y: message.y,
-          lastSeen: Date.now(),
-          focus: peersRef.current[message.userId]?.focus,
-        });
-      }
-
-      if (message.kind === "config") {
-        hasRemoteConfig.current = true;
-        setConfig(message.config);
-        pushActivity(`${message.username} adjusted the build`, message.username);
-        setSynced(true);
-        setTimeout(() => setSynced(false), 1200);
-      }
-
-      if (message.kind === "focus") {
-        upsertPeer({
-          id: message.userId,
-          username: message.username,
-          x: peersRef.current[message.userId]?.x ?? 0,
-          y: peersRef.current[message.userId]?.y ?? 0,
-          lastSeen: Date.now(),
-          focus: message.field,
-        });
-      }
-
-      if (message.kind === "comment") {
-        upsertComment(message.comment);
-      }
-
-      if (message.kind === "project-meta") {
-        setProjectMeta((prev) => ({
-          title: message.project.title ?? prev.title,
-          description: message.project.description ?? prev.description,
-          baseModel: message.project.baseModel ?? prev.baseModel,
-        }));
-      }
+      handleIncoming(message);
     };
 
     channel.addEventListener("message", onMessage);
@@ -411,7 +421,34 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       channel.removeEventListener("message", onMessage);
       channel.close();
     };
-  }, [projectId, pushActivity, upsertComment, upsertPeer, userId, username]);
+  }, [handleIncoming, projectId, userId, username]);
+
+  useEffect(() => {
+    if (!userId) return;
+    // Ensure server-side Socket.IO is initialized
+    fetch("/api/socket").catch(() => undefined);
+
+    const socket = io({
+      path: "/api/socket",
+      transports: ["websocket"],
+      query: { projectId, username, userId },
+    });
+    socketRef.current = socket;
+
+    socket.on("collab-message", (message: CollabMessage) => {
+      handleIncoming(message);
+    });
+
+    socket.on("connect", () => {
+      socket.emit("collab-message", { kind: "focus", field: null, userId, username });
+    });
+
+    return () => {
+      socket.off("collab-message");
+      socket.disconnect();
+      socketRef.current = null;
+    };
+  }, [handleIncoming, projectId, userId, username]);
 
   useEffect(() => {
     peersRef.current = peers;
