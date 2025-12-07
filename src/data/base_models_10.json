@@ -1,0 +1,872 @@
+{
+  "Nexon": {
+    "brand": "Tata",
+    "model": "Nexon",
+    "base_price": 1350520,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Harrier": {
+    "brand": "Tata",
+    "model": "Harrier",
+    "base_price": 1127052,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Creta": {
+    "brand": "Hyundai",
+    "model": "Creta",
+    "base_price": 1255187,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Venue": {
+    "brand": "Hyundai",
+    "model": "Venue",
+    "base_price": 1078992,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Baleno": {
+    "brand": "Maruti Suzuki",
+    "model": "Baleno",
+    "base_price": 1207861,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Brezza": {
+    "brand": "Maruti Suzuki",
+    "model": "Brezza",
+    "base_price": 1199111,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "XUV300": {
+    "brand": "Mahindra",
+    "model": "XUV300",
+    "base_price": 1227623,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "XUV700": {
+    "brand": "Mahindra",
+    "model": "XUV700",
+    "base_price": 1380296,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Seltos": {
+    "brand": "Kia",
+    "model": "Seltos",
+    "base_price": 1093534,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Sonet": {
+    "brand": "Kia",
+    "model": "Sonet",
+    "base_price": 1406873,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Hyryder": {
+    "brand": "Toyota",
+    "model": "Hyryder",
+    "base_price": 1066624,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Glanza": {
+    "brand": "Toyota",
+    "model": "Glanza",
+    "base_price": 965366,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Hector": {
+    "brand": "MG",
+    "model": "Hector",
+    "base_price": 1573014,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Astor": {
+    "brand": "MG",
+    "model": "Astor",
+    "base_price": 1165310,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  },
+  "Virtus": {
+    "brand": "Volkswagen",
+    "model": "Virtus",
+    "base_price": 1579829,
+    "options": {
+      "transmission_type": {
+        "Manual": 0,
+        "Automatic": 60000,
+        "CVT": 70000,
+        "DCT": 90000
+      },
+      "exterior_color": {
+        "Red": 0,
+        "Blue": 0,
+        "White": 0,
+        "Black": 0,
+        "Grey": 0,
+        "Silver": 0
+      },
+      "wheel_size_inch": {
+        "15inch": 0,
+        "16inch": 12000,
+        "17inch": 25000,
+        "18inch": 40000
+      },
+      "roof_type": {
+        "None": 0,
+        "Sunroof": 45000,
+        "Panoramic": 90000
+      },
+      "upholstery_material": {
+        "Fabric": 0,
+        "Leatherette": 25000,
+        "Leather": 60000
+      },
+      "infotainment_screen_size": {
+        "7inch": 0,
+        "9inch": 12000,
+        "10inch": 20000,
+        "12inch": 35000
+      },
+      "speaker_count": {
+        "4": 0,
+        "6": 6000,
+        "8": 12000
+      },
+      "airbags_count": {
+        "2": 0,
+        "4": 15000,
+        "6": 30000
+      },
+      "ADAS_package": {
+        "None": 0,
+        "Basic": 50000,
+        "Advanced": 120000
+      }
+    }
+  }
+}

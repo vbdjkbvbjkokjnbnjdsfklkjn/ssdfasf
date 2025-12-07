@@ -1,0 +1,638 @@
+[
+  {
+    "model": "Nexon",
+    "brand": "Tata",
+    "variants": [
+      {
+        "variant_name": "Nexon_Variant_1",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_2",
+        "tyre_size": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_3",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_5",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_6",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Nexon_Variant_7",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      }
+    ]
+  },
+  {
+    "model": "Harrier",
+    "brand": "Tata",
+    "variants": [
+      {
+        "variant_name": "Harrier_Variant_1",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_2",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_3",
+        "tyre_size": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_4",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_5",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_6",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_7",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "Harrier_Variant_8",
+        "tyre_size": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      }
+    ]
+  },
+  {
+    "model": "Creta",
+    "brand": "Hyundai",
+    "variants": [
+      {
+        "variant_name": "Creta_Variant_1",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Creta_Variant_2",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Creta_Variant_3",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Creta_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Creta_Variant_5",
+        "tyre_size": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Creta_Variant_6",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Creta_Variant_7",
+        "tyre_size": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      }
+    ]
+  },
+  {
+    "model": "Venue",
+    "brand": "Hyundai",
+    "variants": [
+      {
+        "variant_name": "Venue_Variant_1",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Venue_Variant_2",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Venue_Variant_3",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Venue_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Venue_Variant_5",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Venue_Variant_6",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Venue_Variant_7",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Venue_Variant_8",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      }
+    ]
+  },
+  {
+    "model": "Baleno",
+    "brand": "Maruti Suzuki",
+    "variants": [
+      {
+        "variant_name": "Baleno_Variant_1",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_2",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_3",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_5",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_6",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_7",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Baleno_Variant_8",
+        "tyre_size": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      }
+    ]
+  },
+  {
+    "model": "Brezza",
+    "brand": "Maruti Suzuki",
+    "variants": [
+      {
+        "variant_name": "Brezza_Variant_1",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_2",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_3",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_4",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_5",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_6",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      },
+      {
+        "variant_name": "Brezza_Variant_7",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "9inch"
+      }
+    ]
+  },
+  {
+    "model": "XUV300",
+    "brand": "Mahindra",
+    "variants": [
+      {
+        "variant_name": "XUV300_Variant_1",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "XUV300_Variant_2",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "XUV300_Variant_3",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "XUV300_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "7inch"
+      },
+      {
+        "variant_name": "XUV300_Variant_5",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "XUV300_Variant_6",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      }
+    ]
+  },
+  {
+    "model": "XUV700",
+    "brand": "Mahindra",
+    "variants": [
+      {
+        "variant_name": "XUV700_Variant_1",
+        "tyre_size": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "XUV700_Variant_2",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "XUV700_Variant_3",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "XUV700_Variant_4",
+        "tyre_size": "19inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "ADAS_package": "Advanced",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "XUV700_Variant_5",
+        "tyre_size": "19inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "12inch"
+      },
+      {
+        "variant_name": "XUV700_Variant_6",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "12inch"
+      }
+    ]
+  },
+  {
+    "model": "Seltos",
+    "brand": "Kia",
+    "variants": [
+      {
+        "variant_name": "Seltos_Variant_1",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_2",
+        "tyre_size": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "8inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_3",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_4",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_5",
+        "tyre_size": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_6",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_7",
+        "tyre_size": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Seltos_Variant_8",
+        "tyre_size": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "10inch"
+      }
+    ]
+  },
+  {
+    "model": "Hector",
+    "brand": "MG",
+    "variants": [
+      {
+        "variant_name": "Hector_Variant_1",
+        "tyre_size": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "14inch"
+      },
+      {
+        "variant_name": "Hector_Variant_2",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Hector_Variant_3",
+        "tyre_size": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "14inch"
+      },
+      {
+        "variant_name": "Hector_Variant_4",
+        "tyre_size": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "ADAS_package": "None",
+        "infotainment_screen_size": "14inch"
+      },
+      {
+        "variant_name": "Hector_Variant_5",
+        "tyre_size": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Hector_Variant_6",
+        "tyre_size": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "10inch"
+      },
+      {
+        "variant_name": "Hector_Variant_7",
+        "tyre_size": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "ADAS_package": "Basic",
+        "infotainment_screen_size": "14inch"
+      }
+    ]
+  }
+]

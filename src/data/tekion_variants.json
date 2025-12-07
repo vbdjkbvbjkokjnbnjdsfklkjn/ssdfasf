@@ -1,0 +1,1304 @@
+[
+  {
+    "model": "Nexon",
+    "brand": "Tata",
+    "variants": [
+      {
+        "variant_name": "Nexon_Variant_1",
+        "transmission_type": "DCT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Nexon_Variant_2",
+        "transmission_type": "Automatic",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Nexon_Variant_3",
+        "transmission_type": "Manual",
+        "exterior_color": "Red",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Nexon_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Nexon_Variant_5",
+        "transmission_type": "DCT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Nexon_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Nexon_Variant_7",
+        "transmission_type": "Automatic",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  },
+  {
+    "model": "Harrier",
+    "brand": "Tata",
+    "variants": [
+      {
+        "variant_name": "Harrier_Variant_1",
+        "transmission_type": "Manual",
+        "exterior_color": "White",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Harrier_Variant_2",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Harrier_Variant_3",
+        "transmission_type": "Automatic",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Harrier_Variant_4",
+        "transmission_type": "DCT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Harrier_Variant_5",
+        "transmission_type": "Automatic",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Harrier_Variant_6",
+        "transmission_type": "Manual",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  },
+  {
+    "model": "Creta",
+    "brand": "Hyundai",
+    "variants": [
+      {
+        "variant_name": "Creta_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "White",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Creta_Variant_2",
+        "transmission_type": "DCT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Creta_Variant_3",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Creta_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Creta_Variant_5",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Creta_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Creta_Variant_7",
+        "transmission_type": "Automatic",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  },
+  {
+    "model": "Venue",
+    "brand": "Hyundai",
+    "variants": [
+      {
+        "variant_name": "Venue_Variant_1",
+        "transmission_type": "DCT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Venue_Variant_2",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Venue_Variant_3",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Venue_Variant_4",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Venue_Variant_5",
+        "transmission_type": "CVT",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Venue_Variant_6",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      }
+    ]
+  },
+  {
+    "model": "Baleno",
+    "brand": "Maruti Suzuki",
+    "variants": [
+      {
+        "variant_name": "Baleno_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Baleno_Variant_2",
+        "transmission_type": "CVT",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Baleno_Variant_3",
+        "transmission_type": "Manual",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Baleno_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Baleno_Variant_5",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Baleno_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Baleno_Variant_7",
+        "transmission_type": "CVT",
+        "exterior_color": "White",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Baleno_Variant_8",
+        "transmission_type": "Manual",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      }
+    ]
+  },
+  {
+    "model": "Brezza",
+    "brand": "Maruti Suzuki",
+    "variants": [
+      {
+        "variant_name": "Brezza_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Brezza_Variant_2",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Brezza_Variant_3",
+        "transmission_type": "Automatic",
+        "exterior_color": "Black",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Brezza_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Brezza_Variant_5",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Brezza_Variant_6",
+        "transmission_type": "CVT",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Brezza_Variant_7",
+        "transmission_type": "DCT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Brezza_Variant_8",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  },
+  {
+    "model": "XUV300",
+    "brand": "Mahindra",
+    "variants": [
+      {
+        "variant_name": "XUV300_Variant_1",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV300_Variant_2",
+        "transmission_type": "DCT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "XUV300_Variant_3",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV300_Variant_4",
+        "transmission_type": "Manual",
+        "exterior_color": "White",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV300_Variant_5",
+        "transmission_type": "DCT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV300_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      }
+    ]
+  },
+  {
+    "model": "XUV700",
+    "brand": "Mahindra",
+    "variants": [
+      {
+        "variant_name": "XUV700_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "XUV700_Variant_2",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV700_Variant_3",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "XUV700_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "XUV700_Variant_5",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "XUV700_Variant_6",
+        "transmission_type": "Manual",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "XUV700_Variant_7",
+        "transmission_type": "DCT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  },
+  {
+    "model": "Seltos",
+    "brand": "Kia",
+    "variants": [
+      {
+        "variant_name": "Seltos_Variant_1",
+        "transmission_type": "Manual",
+        "exterior_color": "White",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Seltos_Variant_2",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Seltos_Variant_3",
+        "transmission_type": "DCT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Seltos_Variant_4",
+        "transmission_type": "Manual",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Seltos_Variant_5",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Seltos_Variant_6",
+        "transmission_type": "DCT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Seltos_Variant_7",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      }
+    ]
+  },
+  {
+    "model": "Sonet",
+    "brand": "Kia",
+    "variants": [
+      {
+        "variant_name": "Sonet_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Sonet_Variant_2",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Sonet_Variant_3",
+        "transmission_type": "CVT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Sonet_Variant_4",
+        "transmission_type": "Manual",
+        "exterior_color": "Red",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Sonet_Variant_5",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Sonet_Variant_6",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      }
+    ]
+  },
+  {
+    "model": "Hyryder",
+    "brand": "Toyota",
+    "variants": [
+      {
+        "variant_name": "Hyryder_Variant_1",
+        "transmission_type": "CVT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Hyryder_Variant_2",
+        "transmission_type": "DCT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Hyryder_Variant_3",
+        "transmission_type": "DCT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Hyryder_Variant_4",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Hyryder_Variant_5",
+        "transmission_type": "Automatic",
+        "exterior_color": "White",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Hyryder_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "White",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      }
+    ]
+  },
+  {
+    "model": "Glanza",
+    "brand": "Toyota",
+    "variants": [
+      {
+        "variant_name": "Glanza_Variant_1",
+        "transmission_type": "Automatic",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Glanza_Variant_2",
+        "transmission_type": "Automatic",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Glanza_Variant_3",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Glanza_Variant_4",
+        "transmission_type": "Manual",
+        "exterior_color": "White",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Glanza_Variant_5",
+        "transmission_type": "DCT",
+        "exterior_color": "White",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Glanza_Variant_6",
+        "transmission_type": "DCT",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      }
+    ]
+  },
+  {
+    "model": "Hector",
+    "brand": "MG",
+    "variants": [
+      {
+        "variant_name": "Hector_Variant_1",
+        "transmission_type": "Automatic",
+        "exterior_color": "White",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Hector_Variant_2",
+        "transmission_type": "Manual",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Hector_Variant_3",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Hector_Variant_4",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Hector_Variant_5",
+        "transmission_type": "CVT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Hector_Variant_6",
+        "transmission_type": "DCT",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      }
+    ]
+  },
+  {
+    "model": "Astor",
+    "brand": "MG",
+    "variants": [
+      {
+        "variant_name": "Astor_Variant_1",
+        "transmission_type": "Automatic",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Astor_Variant_2",
+        "transmission_type": "CVT",
+        "exterior_color": "Black",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Astor_Variant_3",
+        "transmission_type": "Manual",
+        "exterior_color": "Blue",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "10inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Astor_Variant_4",
+        "transmission_type": "DCT",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "16inch",
+        "roof_type": "None",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Astor_Variant_5",
+        "transmission_type": "DCT",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "6",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Astor_Variant_6",
+        "transmission_type": "CVT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "15inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Astor_Variant_7",
+        "transmission_type": "Manual",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      }
+    ]
+  },
+  {
+    "model": "Virtus",
+    "brand": "Volkswagen",
+    "variants": [
+      {
+        "variant_name": "Virtus_Variant_1",
+        "transmission_type": "Automatic",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "15inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Virtus_Variant_2",
+        "transmission_type": "Manual",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "8",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Virtus_Variant_3",
+        "transmission_type": "Manual",
+        "exterior_color": "Silver",
+        "wheel_size_inch": "18inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "7inch",
+        "speaker_count": "6",
+        "airbags_count": "4",
+        "ADAS_package": "None"
+      },
+      {
+        "variant_name": "Virtus_Variant_4",
+        "transmission_type": "DCT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "2",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Virtus_Variant_5",
+        "transmission_type": "Automatic",
+        "exterior_color": "Red",
+        "wheel_size_inch": "16inch",
+        "roof_type": "Panoramic",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "4",
+        "airbags_count": "4",
+        "ADAS_package": "Basic"
+      },
+      {
+        "variant_name": "Virtus_Variant_6",
+        "transmission_type": "Automatic",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "17inch",
+        "roof_type": "Sunroof",
+        "upholstery_material": "Fabric",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Virtus_Variant_7",
+        "transmission_type": "Manual",
+        "exterior_color": "Grey",
+        "wheel_size_inch": "17inch",
+        "roof_type": "None",
+        "upholstery_material": "Leatherette",
+        "infotainment_screen_size": "9inch",
+        "speaker_count": "6",
+        "airbags_count": "6",
+        "ADAS_package": "Advanced"
+      },
+      {
+        "variant_name": "Virtus_Variant_8",
+        "transmission_type": "CVT",
+        "exterior_color": "Red",
+        "wheel_size_inch": "18inch",
+        "roof_type": "None",
+        "upholstery_material": "Leather",
+        "infotainment_screen_size": "12inch",
+        "speaker_count": "4",
+        "airbags_count": "2",
+        "ADAS_package": "Advanced"
+      }
+    ]
+  }
+]

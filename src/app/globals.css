@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --background: #050914;
+  --foreground: #e5edf8;
+  --muted: #7f8ca3;
+  --panel: #0c1628;
+  --panel-strong: #0f1c33;
+  --glow-blue: #4cb8ff;
+  --glow-indigo: #6f7dff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, #152245 0, transparent 26%),
+    radial-gradient(circle at 80% 0%, #0e1c3d 0, transparent 24%),
+    radial-gradient(circle at 50% 70%, #101c33 0, transparent 34%),
+    linear-gradient(145deg, #050914 0%, #070f20 45%, #050914 100%);
+  color: var(--foreground);
+  font-family: var(--font-sans), "Space Grotesk", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
