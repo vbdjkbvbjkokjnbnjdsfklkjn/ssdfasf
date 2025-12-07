@@ -214,6 +214,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [status, setStatus] = useState<string | null>(null);
   const [synced, setSynced] = useState(false);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
+  const [loadingConfig, setLoadingConfig] = useState(true);
   const [comments, setComments] = useState<Record<string, CommentItem[]>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
   const channelRef = useRef<BroadcastChannel | null>(null);
@@ -307,6 +308,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         pushActivity(`${message.username} adjusted the build`, message.username);
         setSynced(true);
         setTimeout(() => setSynced(false), 1200);
+        setLoadingConfig(false);
       }
 
       if (message.kind === "focus") {
@@ -480,6 +482,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
     const saved = window.localStorage.getItem(USERNAME_KEY);
     const effectiveUser = saved?.trim() || username;
     const fetchProjects = async () => {
+      setLoadingConfig(true);
       try {
         setStatus("Syncing project...");
         const res = await fetch(`/api/projects?username=${encodeURIComponent(effectiveUser)}`);
@@ -490,6 +493,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
             setConfig(initial);
             hasRemoteConfig.current = true;
           }
+          setLoadingConfig(false);
           return;
         }
         const data = await res.json();
@@ -511,8 +515,8 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                 const body = await cfgRes.json();
                 if (body?.config) {
                   setConfig(body.config);
-                  emit({ kind: "config", userId, username, config: body.config });
                   hasRemoteConfig.current = true;
+                  setLoadingConfig(false);
                 }
               }
             } catch (err) {
@@ -522,6 +526,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
               const initial = createConfigFromVariant(meta.baseModel);
               setConfig(initial);
               hasRemoteConfig.current = true;
+              setLoadingConfig(false);
             }
           }
           emit({ kind: "project-meta", userId, username, project: meta });
@@ -532,6 +537,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
             setConfig(initial);
             hasRemoteConfig.current = true;
           }
+          setLoadingConfig(false);
         }
         setStatus(saveStatus ?? null);
       } catch (error) {
@@ -542,6 +548,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           setConfig(initial);
           hasRemoteConfig.current = true;
         }
+        setLoadingConfig(false);
       }
     };
     fetchProjects();
@@ -614,6 +621,13 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           </span>
         </div>
       </header>
+
+      {loadingConfig ? (
+        <div className="relative z-10 mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-slate-200">
+          Loading shared car configuration...
+        </div>
+      ) : (
+        <>
 
       <div className="relative z-10 mt-6 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
         <section className="space-y-4">
@@ -692,11 +706,11 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                   value={config.selections[attribute] ?? Object.keys(options)[0]}
                   onChange={(val) => updateConfig(attribute, val)}
                   onFocus={() => markFocus(attribute)}
-                    options={Object.entries(options).map(([value, delta]) => ({
-                      value: value as string,
-                      label: value,
-                      hint: Number(delta) === 0 ? "Included" : `+Rs ${numberFmt.format(Number(delta))}`,
-                    }))}
+                  options={Object.entries(options).map(([value, delta]) => ({
+                    value: value as string,
+                    label: value,
+                    hint: Number(delta) === 0 ? "Included" : `+Rs ${numberFmt.format(Number(delta))}`,
+                  }))}
                 />
                 <div className="mt-3 space-y-2 rounded-xl border border-white/10 bg-slate-950/40 p-3">
                   <div className="flex items-center justify-between text-[11px] text-slate-300">
@@ -795,6 +809,8 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
           </div>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }
