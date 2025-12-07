@@ -230,6 +230,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const lastCursorSent = useRef<number>(0);
   const hasRemoteConfig = useRef(false);
   const encodedProjectId = useMemo(() => encodeURIComponent(projectId), [projectId]);
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
 
   const pricing = useMemo(() => calculatePricing(config), [config]);
   const numberFmt = useMemo(
@@ -377,7 +378,27 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
     setCommentDrafts((prev) => ({ ...prev, [attribute]: "" }));
     emit({ kind: "comment", userId, username, comment });
     pushActivity(`${username} left a note on ${attributeLabel(attribute)}`, username);
+    persistComments(comment);
   };
+
+  const persistComments = useCallback(
+    async (latest?: CommentItem) => {
+      try {
+        const payload =
+          latest && latest.attribute
+            ? { ...comments, [latest.attribute]: [latest, ...(comments[latest.attribute] ?? [])] }
+            : comments;
+        await fetch(`/api/projects/${encodedProjectId}/comments`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ comments: payload }),
+        });
+      } catch (error) {
+        console.error("Failed to persist comments", error);
+      }
+    },
+    [comments, encodedProjectId]
+  );
 
   const persistConfig = useCallback(
     async (configToSave: CarConfiguration) => {
@@ -558,6 +579,27 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   useEffect(() => {
     peersRef.current = peers;
   }, [peers]);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (!projectId || commentsLoaded) return;
+      try {
+        const res = await fetch(`/api/projects/${encodedProjectId}/comments`);
+        if (res.ok) {
+          const body = await res.json();
+          if (body?.comments && typeof body.comments === "object") {
+            const parsed = body.comments as Record<string, CommentItem[]>;
+            setComments(parsed);
+          }
+        }
+      } catch (error) {
+        console.warn("Failed to load comments", error);
+      } finally {
+        setCommentsLoaded(true);
+      }
+    };
+    fetchComments();
+  }, [commentsLoaded, encodedProjectId, projectId]);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -307,10 +307,12 @@ export function ProjectCard({ project, currentUsername, onDelete }: ProjectCardP
                     </div>
                     <button
                       type="button"
+                      aria-label="Close share"
                       onClick={closeShare}
-                      className="absolute right-3 top-3 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-slate-200 transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                      className="absolute right-3 top-3 inline-flex items-center justify-center gap-1 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-slate-100 transition hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                     >
-                      Close
+                      <span aria-hidden="true">×</span>
+                      <span>Close</span>
                     </button>
                     <div className="relative space-y-3">
                       <div className="space-y-1">
