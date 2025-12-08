@@ -46,6 +46,15 @@ type CollabMessage =
   | { kind: "project-meta"; userId: string; username: string; project: Partial<ProjectMeta> }
   | { kind: "comment"; userId: string; username: string; comment: CommentItem };
 
+function isCollabMessage(payload: unknown): payload is CollabMessage {
+  return (
+    typeof payload === "object" &&
+    payload !== null &&
+    "kind" in payload &&
+    "userId" in payload
+  );
+}
+
 type ProjectMeta = {
   title: string;
   description?: string;
@@ -251,6 +260,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [scheduledVariant, setScheduledVariant] = useState<SimilarCarMatch | null>(null);
   const [dealerDialogOpen, setDealerDialogOpen] = useState(false);
   const colorRegistryRef = useRef<Record<string, string>>({});
+  const recentMessagesRef = useRef<{ key: string; seen: number }[]>([]);
   const emiRate = DEFAULT_EMI_RATE;
 
   const getColorForId = useCallback(
@@ -304,12 +314,17 @@ const emi = useMemo(
 
   const pushActivity = useCallback((message: string, user: string) => {
     setActivity((items) => {
+      const now = Date.now();
+      const latest = items[0];
+      if (latest && latest.message === message && latest.user === user && now - latest.timestamp < 1200) {
+        return items;
+      }
       const next: ActivityItem[] = [
         {
           id: randomId(),
           message,
           user,
-          timestamp: Date.now(),
+          timestamp: now,
         },
         ...items,
       ].slice(0, 12);
@@ -355,48 +370,66 @@ const emi = useMemo(
   }, [comments]);
 
   const handleIncoming = useCallback(
-    (message: CollabMessage) => {
-      if (!message || (message as CollabMessage).userId === userId) return;
+    (raw: unknown) => {
+      if (!isCollabMessage(raw)) return;
+      if (raw.userId === userId) return;
 
-      if (message.kind === "cursor") {
+      const typed = raw;
+
+      const messageKey = (() => {
+        if (typed.kind === "cursor") return `cursor-${typed.userId}-${Math.round(typed.x)}-${Math.round(typed.y)}`;
+        if (typed.kind === "focus") return `focus-${typed.userId}-${typed.field ?? "null"}`;
+        if (typed.kind === "config") return `config-${typed.userId}-${JSON.stringify(typed.config.selections ?? {})}`;
+        if (typed.kind === "comment") return `comment-${typed.userId}-${typed.comment.id}`;
+        if (typed.kind === "project-meta") return `meta-${typed.userId}-${Object.keys(typed.project).join("-")}`;
+        return `${typed.kind}-${typed.userId}`;
+      })();
+
+      const now = Date.now();
+      const recent = recentMessagesRef.current;
+      const already = recent.find((item) => item.key === messageKey && now - item.seen < 1500);
+      if (already) return;
+      recentMessagesRef.current = [{ key: messageKey, seen: now }, ...recent].slice(0, 32);
+
+      if (typed.kind === "cursor") {
         upsertPeer({
-          id: message.userId,
-          username: message.username,
-          x: message.x,
-          y: message.y,
+          id: typed.userId,
+          username: typed.username,
+          x: typed.x,
+          y: typed.y,
           lastSeen: Date.now(),
-          focus: peersRef.current[message.userId]?.focus,
+          focus: peersRef.current[typed.userId]?.focus,
         });
       }
 
-      if (message.kind === "config") {
+      if (typed.kind === "config") {
         hasRemoteConfig.current = true;
-        setConfig(message.config);
-        pushActivity(`${message.username} adjusted the build`, message.username);
+        setConfig(typed.config);
+        pushActivity(`${typed.username} adjusted the build`, typed.username);
         setSynced(true);
         setTimeout(() => setSynced(false), 1200);
       }
 
-      if (message.kind === "focus") {
+      if (typed.kind === "focus") {
         upsertPeer({
-          id: message.userId,
-          username: message.username,
-          x: peersRef.current[message.userId]?.x ?? 0,
-          y: peersRef.current[message.userId]?.y ?? 0,
+          id: typed.userId,
+          username: typed.username,
+          x: peersRef.current[typed.userId]?.x ?? 0,
+          y: peersRef.current[typed.userId]?.y ?? 0,
           lastSeen: Date.now(),
-          focus: message.field,
+          focus: typed.field,
         });
       }
 
-      if (message.kind === "comment") {
-        upsertComment(message.comment);
+      if (typed.kind === "comment") {
+        upsertComment(typed.comment);
       }
 
-      if (message.kind === "project-meta") {
+      if (typed.kind === "project-meta") {
         setProjectMeta((prev) => ({
-          title: message.project.title ?? prev.title,
-          description: message.project.description ?? prev.description,
-          baseModel: message.project.baseModel ?? prev.baseModel,
+          title: typed.project.title ?? prev.title,
+          description: typed.project.description ?? prev.description,
+          baseModel: typed.project.baseModel ?? prev.baseModel,
         }));
       }
     },
@@ -838,7 +871,7 @@ const emi = useMemo(
           <button
             type="button"
             onClick={() => setDealerDialogOpen(true)}
-            className="w-full rounded-full border border-indigo-300/70 bg-indigo-500/25 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.6)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.75)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="shrink-0 rounded-full border border-indigo-300/40 bg-indigo-500/15 px-4 py-2 text-sm font-semibold text-indigo-100 transition hover:border-indigo-200/70 hover:bg-indigo-500/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 min-w-[170px]"
           >
             Connect to dealer
           </button>
@@ -1027,14 +1060,14 @@ const emi = useMemo(
             <button
               type="button"
               onClick={() => setSimilarDialogOpen(true)}
-              className="w-full rounded-2xl bg-indigo-500 px-5 py-3 text-base font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-white/25 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Show similar builds
             </button>
             <button
               type="button"
               onClick={() => router.push("/car-success")}
-              className="w-full rounded-2xl bg-emerald-500 px-5 py-3 text-base font-semibold text-white shadow-[0_14px_38px_-22px_rgba(16,185,129,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(16,185,129,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(16,185,129,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="w-full rounded-xl border border-emerald-300/40 bg-emerald-500/15 px-4 py-2.5 text-sm font-semibold text-emerald-100 transition hover:border-emerald-200/70 hover:bg-emerald-500/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Checkout
             </button>
@@ -1291,7 +1324,7 @@ const emi = useMemo(
                           <button
                             type="button"
                             onClick={() => setScheduledVariant(match)}
-                            className="w-full rounded-xl bg-emerald-500 px-4 py-2 text-[13px] font-semibold text-white shadow-[0_14px_38px_-22px_rgba(16,185,129,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(16,185,129,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(16,185,129,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                            className="w-full rounded-xl border border-emerald-300/40 bg-emerald-500/10 px-4 py-2.5 text-[13px] font-semibold text-emerald-100 transition hover:border-emerald-200/70 hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
                           >
                             Schedule a drive
                           </button>
@@ -1307,7 +1340,7 @@ const emi = useMemo(
       ) : null}
 
       {scheduledVariant ? (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/70 backdrop-blur">
+        <div className="fixed inset-0 z-70 flex items-center justify-center bg-slate-950/70 backdrop-blur">
           <div className="absolute inset-0" onClick={() => setScheduledVariant(null)} />
           <div className="relative z-10 w-[min(420px,90vw)] rounded-2xl border border-emerald-300/40 bg-slate-950 p-5 text-center shadow-2xl ring-1 ring-emerald-300/30">
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-200 ring-1 ring-emerald-400/40">
@@ -1318,19 +1351,19 @@ const emi = useMemo(
               {scheduledVariant.variant.variantName} - {scheduledVariant.variant.brand}{" "}
               {scheduledVariant.variant.model}
             </p>
-            <button
-              type="button"
-              onClick={() => setScheduledVariant(null)}
-              className="mt-4 w-full rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(16,185,129,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(16,185,129,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(16,185,129,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              Done
-            </button>
+          <button
+            type="button"
+            onClick={() => setScheduledVariant(null)}
+            className="mt-4 w-full rounded-xl border border-emerald-300/40 bg-emerald-500/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-200/70 hover:bg-emerald-500/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          >
+            Done
+          </button>
           </div>
         </div>
       ) : null}
 
       {dealerDialogOpen ? (
-        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-slate-950/70 backdrop-blur">
+        <div className="fixed inset-0 z-75 flex items-center justify-center bg-slate-950/70 backdrop-blur">
           <div className="absolute inset-0" onClick={() => setDealerDialogOpen(false)} />
           <div className="relative z-10 w-[min(460px,92vw)] overflow-hidden rounded-2xl border border-indigo-300/40 bg-slate-950 p-5 text-center shadow-2xl ring-1 ring-indigo-400/30">
             <div className="absolute -left-16 -top-16 h-36 w-36 rounded-full bg-indigo-500/10 blur-3xl" />
@@ -1349,7 +1382,7 @@ const emi = useMemo(
             <button
               type="button"
               onClick={() => setDealerDialogOpen(false)}
-              className="mt-5 w-full rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            className="mt-5 w-full rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.85)] active:translate-y-px active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               Okay
             </button>
