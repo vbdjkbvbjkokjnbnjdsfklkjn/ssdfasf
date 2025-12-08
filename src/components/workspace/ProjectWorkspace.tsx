@@ -20,6 +20,7 @@ import {
   listBaseModels,
 } from "@/data/configurator";
 import type { Project } from "@/data/projects";
+import { calculateEmi, DEFAULT_EMI_RATE } from "@/lib/emi";
 
 type ProjectWorkspaceProps = {
   projectId: string;
@@ -231,6 +232,9 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const hasRemoteConfig = useRef(false);
   const encodedProjectId = useMemo(() => encodeURIComponent(projectId), [projectId]);
   const [commentsLoaded, setCommentsLoaded] = useState(false);
+  const [paymentMode, setPaymentMode] = useState<"full" | "emi">("full");
+  const [emiMonths, setEmiMonths] = useState(24);
+  const emiRate = DEFAULT_EMI_RATE;
 
   const pricing = useMemo(() => calculatePricing(config), [config]);
   const numberFmt = useMemo(
@@ -240,8 +244,20 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         : { format: (value: number) => value.toString() },
     []
   );
+  const emi = useMemo(
+    () =>
+      calculateEmi({
+        principal: pricing.total,
+        months: emiMonths,
+        annualRate: emiRate,
+      }),
+    [emiMonths, emiRate, pricing.total]
+  );
   const [selfLastSeen] = useState(() => Date.now());
   const statusMessage = status || saveStatus;
+  const emiMonthly = Math.round(emi.monthlyPayment);
+  const emiInterest = Math.round(Math.max(0, emi.totalInterest));
+  const emiTotalPayable = Math.round(emi.totalPayable);
 
   const fieldOwners = useMemo(() => {
     const map: Record<string, string[]> = {};
@@ -362,6 +378,13 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const markFocus = (field: string | null) => {
     if (!userId) return;
     emit({ kind: "focus", field, userId, username });
+  };
+
+  const clampMonths = (value: number) => Math.min(84, Math.max(6, Math.floor(value) || 6));
+  const handleEmiMonthsChange = (value: string | number) => {
+    const parsed = typeof value === "string" ? parseInt(value, 10) : value;
+    if (Number.isNaN(parsed)) return;
+    setEmiMonths(clampMonths(parsed));
   };
 
   const addComment = (attribute: string) => {
@@ -792,6 +815,9 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                 <p className="text-3xl font-semibold text-emerald-300">
                   Rs {numberFmt.format(pricing.total)}
                 </p>
+                <p className="text-[11px] text-slate-400">
+                  {paymentMode === "emi" ? "EMI selected - see details below" : "One-time payment"}
+                </p>
               </div>
             </div>
             <div className="mt-3 space-y-2 rounded-xl border border-white/10 bg-slate-950/40 p-3 text-sm text-slate-200">
@@ -808,6 +834,113 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                     <span className="text-emerald-200">+Rs {numberFmt.format(item.delta)}</span>
                   </div>
                 ))
+              )}
+            </div>
+
+            <div className="mt-4 space-y-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4 shadow-sm ring-1 ring-white/5">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.24em] text-indigo-200/80">Payment preference</p>
+                  <p className="text-sm font-semibold text-white">Choose full payment or plan an EMI</p>
+                </div>
+                <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[11px] text-indigo-100 shadow-sm">
+                  Fixed APR - Instant preview
+                </span>
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("full")}
+                  className={clsx(
+                    "rounded-xl border px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+                    paymentMode === "full"
+                      ? "border-emerald-300/70 bg-emerald-500/10 text-emerald-100"
+                      : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"
+                  )}
+                >
+                  Pay in full
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("emi")}
+                  className={clsx(
+                    "rounded-xl border px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+                    paymentMode === "emi"
+                      ? "border-indigo-300/70 bg-indigo-500/15 text-indigo-100"
+                      : "border-white/10 bg-white/5 text-slate-200 hover:border-white/20 hover:bg-white/10"
+                  )}
+                >
+                  Plan EMI
+                </button>
+              </div>
+
+              {paymentMode === "emi" ? (
+                <div className="space-y-3 rounded-2xl border border-white/10 bg-slate-950/60 p-3 ring-1 ring-white/10">
+                  <div className="space-y-2 rounded-xl border border-white/10 bg-slate-950/70 p-3">
+                    <div className="flex items-center justify-between text-xs text-slate-300">
+                      <span>Adjust tenure</span>
+                      <span>6 to 84 months</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={6}
+                      max={84}
+                      step={1}
+                      value={emiMonths}
+                      onChange={(event) => handleEmiMonthsChange(event.target.value)}
+                      className="w-full accent-indigo-400"
+                    />
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      <label className="flex flex-col gap-1 text-xs text-slate-300">
+                        Months
+                        <input
+                          type="number"
+                          min={6}
+                          max={84}
+                          value={emiMonths}
+                          onChange={(event) => handleEmiMonthsChange(event.target.value)}
+                          className="rounded-lg border border-white/10 bg-slate-900/80 px-3 py-2 text-sm text-white appearance-none [-moz-appearance:textfield] focus:border-indigo-300/70 focus:outline-none focus:ring-2 focus:ring-indigo-300/40"
+                        />
+                      </label>
+                      <div className="flex flex-col gap-1 text-xs text-slate-300">
+                        Interest (APR %)
+                        <div className="rounded-lg border border-white/15 bg-slate-900/70 px-3 py-2 text-sm text-indigo-100/80 backdrop-blur-sm">
+                          {emiRate}% (fixed)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 lg:grid-cols-2">
+                    <div className="rounded-xl border border-indigo-200/25 bg-slate-950/80 p-3">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-indigo-200/80">EMI summary</p>
+                      <p className="text-xl font-semibold text-white">Rs {numberFmt.format(emiMonthly)} / month</p>
+                      <p className="text-xs text-slate-300">
+                        Based on Rs {numberFmt.format(pricing.total)} for {emiMonths} month{emiMonths === 1 ? "" : "s"}.
+                      </p>
+                      <span className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-[11px] text-indigo-100 ring-1 ring-white/10">
+                        APR {emiRate}% (fixed)
+                      </span>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-slate-900/70 p-3 text-sm text-slate-200">
+                      <div className="flex items-center justify-between">
+                        <span>Tenure</span>
+                        <span>{emiMonths} months</span>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between text-xs text-slate-300">
+                        <span>Total payable</span>
+                        <span className="text-white">Rs {numberFmt.format(emiTotalPayable)}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs text-slate-300">
+                        <span>Total interest</span>
+                        <span className="text-indigo-100">Rs {numberFmt.format(emiInterest)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400">Paying in full keeps the total at Rs {numberFmt.format(pricing.total)} with no interest.</p>
               )}
             </div>
           </div>

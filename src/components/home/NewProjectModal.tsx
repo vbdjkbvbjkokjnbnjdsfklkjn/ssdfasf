@@ -104,12 +104,23 @@ export function NewProjectModal() {
           <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-slate-950/90 p-6 text-slate-100 shadow-2xl ring-1 ring-indigo-500/25">
             <button
               type="button"
-              className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-slate-100 transition hover:border-white/25 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-xl border border-transparent bg-slate-950/80 text-sm font-semibold text-white shadow-[0_8px_18px_-14px_rgba(15,23,42,0.7)] backdrop-blur transition hover:-translate-y-px hover:border-white/25 focus-visible:outline-none focus-visible:border-white/30 focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               onClick={close}
               aria-label="Close"
             >
-              <span aria-hidden="true">×</span>
-              <span>Close</span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-4 w-4 text-white"
+              >
+                <path
+                  d="M6 6l12 12M18 6L6 18"
+                  stroke="currentColor"
+                  strokeWidth="2.25"
+                  strokeLinecap="round"
+                />
+              </svg>
+              <span className="sr-only">Close</span>
             </button>
             <div className="space-y-1">
               <h2 className="text-2xl font-semibold text-slate-100">Build a Car</h2>
