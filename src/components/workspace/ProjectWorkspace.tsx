@@ -55,6 +55,11 @@ function isCollabMessage(payload: unknown): payload is CollabMessage {
   );
 }
 
+function assertUnreachable(value: never): never {
+  // Guard against forgotten message kinds
+  throw new Error(`Unhandled collab message: ${JSON.stringify(value)}`);
+}
+
 type ProjectMeta = {
   title: string;
   description?: string;
@@ -382,7 +387,7 @@ const emi = useMemo(
         if (typed.kind === "config") return `config-${typed.userId}-${JSON.stringify(typed.config.selections ?? {})}`;
         if (typed.kind === "comment") return `comment-${typed.userId}-${typed.comment.id}`;
         if (typed.kind === "project-meta") return `meta-${typed.userId}-${Object.keys(typed.project).join("-")}`;
-        return `${typed.kind}-${typed.userId}`;
+        return assertUnreachable(typed);
       })();
 
       const now = Date.now();
