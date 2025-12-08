@@ -78,7 +78,12 @@ type ApiProject = Project & {
 const USERNAME_KEY = "collabcar_username";
 const SESSION_KEY = "collabcar_session_id";
 
-const palette = [
+const randomId = () =>
+  typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}`;
+
+const COLOR_PALETTE = [
   "#7C3AED",
   "#2563EB",
   "#0EA5E9",
@@ -87,25 +92,19 @@ const palette = [
   "#EC4899",
   "#14B8A6",
   "#E11D48",
+  "#8B5CF6",
+  "#6366F1",
+  "#10B981",
+  "#F97316",
+  "#EF4444",
+  "#06B6D4",
+  "#84CC16",
+  "#A855F7",
+  "#F59E0B",
+  "#22D3EE",
+  "#4ADE80",
+  "#FB7185",
 ];
-
-const randomId = () =>
-  typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `${Date.now().toString(16)}-${Math.random().toString(16).slice(2)}`;
-
-function hashToIndex(value: string) {
-  let hash = 0;
-  for (let i = 0; i < value.length; i += 1) {
-    hash = (hash << 5) - hash + value.charCodeAt(i);
-    hash |= 0;
-  }
-  return Math.abs(hash) % palette.length;
-}
-
-function createColor(id: string) {
-  return palette[hashToIndex(id)];
-}
 
 function optionLabel(value: string | number) {
   if (typeof value === "number") return `${value}"`;
@@ -236,6 +235,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [comments, setComments] = useState<Record<string, CommentItem[]>>({});
   const [commentDrafts, setCommentDrafts] = useState<Record<string, string>>({});
+  const commentScrollRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const channelRef = useRef<BroadcastChannel | null>(null);
   const socketRef = useRef<Socket | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -249,7 +249,22 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const [similarDialogOpen, setSimilarDialogOpen] = useState(false);
   const [detailVariantKey, setDetailVariantKey] = useState<string | null>(null);
   const [scheduledVariant, setScheduledVariant] = useState<SimilarCarMatch | null>(null);
+  const [dealerDialogOpen, setDealerDialogOpen] = useState(false);
+  const colorRegistryRef = useRef<Record<string, string>>({});
   const emiRate = DEFAULT_EMI_RATE;
+
+  const getColorForId = useCallback(
+    (id: string) => {
+      if (colorRegistryRef.current[id]) return colorRegistryRef.current[id];
+      const used = new Set(Object.values(colorRegistryRef.current));
+      const nextColor = COLOR_PALETTE.find((c) => !used.has(c));
+      const fallbackHue = (Object.keys(colorRegistryRef.current).length * 137) % 360;
+      const color = nextColor ?? `hsl(${fallbackHue} 70% 55%)`;
+      colorRegistryRef.current[id] = color;
+      return color;
+    },
+    []
+  );
 
   const pricing = useMemo(() => calculatePricing(config), [config]);
   const numberFmt = useMemo(
@@ -259,8 +274,8 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         : { format: (value: number) => value.toString() },
     []
   );
-  const emi = useMemo(
-    () =>
+const emi = useMemo(
+  () =>
       calculateEmi({
         principal: pricing.total,
         months: emiMonths,
@@ -313,8 +328,8 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
   const upsertComment = useCallback((incoming: CommentItem) => {
     setComments((prev) => {
       const existing = prev[incoming.attribute] ?? [];
-      const nextThread = [incoming, ...existing.filter((item) => item.id !== incoming.id)]
-        .sort((a, b) => b.timestamp - a.timestamp)
+      const nextThread = [...existing.filter((item) => item.id !== incoming.id), incoming]
+        .sort((a, b) => a.timestamp - b.timestamp)
         .slice(0, 30);
       return { ...prev, [incoming.attribute]: nextThread };
     });
@@ -326,10 +341,18 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       [incoming.id]: {
         ...prev[incoming.id],
         ...incoming,
-        color: prev[incoming.id]?.color ?? createColor(incoming.id),
+        color: prev[incoming.id]?.color ?? getColorForId(incoming.id),
       },
     }));
-  }, []);
+  }, [getColorForId]);
+
+  useEffect(() => {
+    Object.values(commentScrollRefs.current).forEach((node) => {
+      if (node) {
+        node.scrollTop = node.scrollHeight;
+      }
+    });
+  }, [comments]);
 
   const handleIncoming = useCallback(
     (message: CollabMessage) => {
@@ -428,7 +451,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       try {
         const payload =
           latest && latest.attribute
-            ? { ...comments, [latest.attribute]: [latest, ...(comments[latest.attribute] ?? [])] }
+            ? { ...comments, [latest.attribute]: [...(comments[latest.attribute] ?? []), latest] }
             : comments;
         await fetch(`/api/projects/${encodedProjectId}/comments`, {
           method: "POST",
@@ -627,16 +650,20 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
       if (!projectId || commentsLoaded) return;
       try {
         const res = await fetch(`/api/projects/${encodedProjectId}/comments`);
-        if (res.ok) {
-          const body = await res.json();
-          if (body?.comments && typeof body.comments === "object") {
-            const parsed = body.comments as Record<string, CommentItem[]>;
-            setComments(parsed);
+          if (res.ok) {
+            const body = await res.json();
+            if (body?.comments && typeof body.comments === "object") {
+              const parsed = body.comments as Record<string, CommentItem[]>;
+              const sorted: Record<string, CommentItem[]> = {};
+              Object.entries(parsed).forEach(([attr, list]) => {
+                sorted[attr] = (list ?? []).slice().sort((a, b) => a.timestamp - b.timestamp);
+              });
+              setComments(sorted);
+            }
           }
-        }
-      } catch (error) {
-        console.warn("Failed to load comments", error);
-      } finally {
+        } catch (error) {
+          console.warn("Failed to load comments", error);
+        } finally {
         setCommentsLoaded(true);
       }
     };
@@ -786,7 +813,7 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                   x: 0,
                   y: 0,
                   lastSeen: selfLastSeen,
-                  color: createColor(userId),
+                  color: getColorForId(userId),
                 }}
               />
             ) : null}
@@ -808,6 +835,13 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
               Delete
             </button>
           </div>
+          <button
+            type="button"
+            onClick={() => setDealerDialogOpen(true)}
+            className="w-full rounded-full border border-indigo-300/70 bg-indigo-500/25 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.6)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.75)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          >
+            Connect to dealer
+          </button>
           <span
             className={clsx(
               "min-w-[140px] text-xs",
@@ -1037,7 +1071,12 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                       {(comments[attribute]?.length ?? 0) === 1 ? "" : "s"}
                     </span>
                   </div>
-                  <div className="max-h-32 space-y-1 overflow-y-auto pr-1">
+                  <div
+                    className="max-h-32 space-y-1 overflow-y-auto pr-1"
+                    ref={(node) => {
+                      commentScrollRefs.current[attribute] = node;
+                    }}
+                  >
                     {(comments[attribute] ?? []).length === 0 ? (
                       <p className="text-[11px] text-slate-500">No notes yet. Start a thread for this part.</p>
                     ) : (
@@ -1060,6 +1099,12 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
                       onChange={(e) =>
                         setCommentDrafts((prev) => ({ ...prev, [attribute]: e.target.value }))
                       }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addComment(attribute);
+                        }
+                      }}
                       onFocus={() => markFocus(attribute)}
                       placeholder="Add a quick note..."
                       className="w-full rounded-lg border border-white/10 bg-slate-950/70 px-3 py-2 text-xs text-white placeholder:text-slate-500 focus:border-indigo-400/60 focus:outline-none focus:ring-2 focus:ring-indigo-400/40"
@@ -1284,6 +1329,34 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
         </div>
       ) : null}
 
+      {dealerDialogOpen ? (
+        <div className="fixed inset-0 z-[75] flex items-center justify-center bg-slate-950/70 backdrop-blur">
+          <div className="absolute inset-0" onClick={() => setDealerDialogOpen(false)} />
+          <div className="relative z-10 w-[min(460px,92vw)] overflow-hidden rounded-2xl border border-indigo-300/40 bg-slate-950 p-5 text-center shadow-2xl ring-1 ring-indigo-400/30">
+            <div className="absolute -left-16 -top-16 h-36 w-36 rounded-full bg-indigo-500/10 blur-3xl" />
+            <div className="absolute -right-10 -bottom-14 h-32 w-32 rounded-full bg-emerald-400/10 blur-3xl" />
+            <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/15 text-2xl text-indigo-100 ring-1 ring-white/10">
+              🤝
+            </div>
+            <p className="text-lg font-semibold text-white">Connecting you to a dealer</p>
+            <p className="mt-1 text-sm text-slate-300">
+              A dealer representative will join shortly to assist with pricing, availability, and test drives.
+            </p>
+            <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-200">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+              <span>Live handoff in progress...</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setDealerDialogOpen(false)}
+              className="mt-5 w-full rounded-xl bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_14px_38px_-22px_rgba(59,130,246,0.8)] transition hover:-translate-y-px hover:shadow-[0_18px_48px_-24px_rgba(59,130,246,0.85)] active:translate-y-[1px] active:shadow-[0_10px_26px_-18px_rgba(59,130,246,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              Okay
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="pointer-events-none absolute inset-0">
         {peersList.map((peer) => (
           <div
@@ -1294,15 +1367,22 @@ export function ProjectWorkspace({ projectId, fallbackTitle }: ProjectWorkspaceP
               top: `${peer.y}%`,
             }}
           >
-            <div
-              className="flex items-center gap-1 rounded-full bg-slate-900/80 px-2 py-1 text-[11px] text-white shadow-lg ring-1 ring-white/10"
-              style={{ borderColor: `${peer.color}55` }}
-            >
+            <div className="flex items-center gap-1 text-[11px] text-white">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                className="-ml-1"
+                style={{ fill: peer.color }}
+              >
+                <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z" />
+              </svg>
               <span
-                className="h-2 w-2 rounded-full"
-                style={{ backgroundColor: peer.color }}
-              />
-              <span>{peer.username}</span>
+                className="rounded-md px-2 py-1 text-[11px] font-semibold"
+                style={{ backgroundColor: `${peer.color}22`, color: "#e2e8f0" }}
+              >
+                {peer.username}
+              </span>
             </div>
           </div>
         ))}
